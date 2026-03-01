@@ -1,0 +1,84 @@
+# Data and checkpoints (large files)
+data/
+checkpoints/
+drone_icl/checkpoints/
+
+# Archive directories
+archive/
+_archive_airsim_approach/
+
+# Virtual environment
+venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Results and logs
+logs/
+logs_*/
+evaluation_results/
+zaratan_results/
+zaratan_results_*/
+results/
+
+# Submission artifacts
+submission/
+submission.zip
+*.zip
+*.tar.gz
+*.h5
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Development markdown files (not in docs/)
+DATA_LEAKAGE_AND_GENERALIZATION_ANALYSIS.md
+CONTINUE_TRAINING_ANALYSIS.md
+DATA_EXPANSION_AND_COMPARISON.md
+DATA_PREPARATION_SUMMARY.md
+DEMO_VIDEO_GUIDE.md
+EVALUATION_EXPLAINED.md
+EVALUATION_RESULTS.md
+EVALUATION.md
+EXTERNAL_DATASETS_ANALYSIS.md
+FINAL_PRESENTATION.md
+FULL_EPISODE_FIXES.md
+GATE_AWARE_SUMMARY.md
+IMPROVEMENT_PLAN.md
+INFERENCE_DEMO_PLAN.md
+INTERVIEW_PREP.md
+MODEL_IMPROVEMENTS.md
+NEXT_STEPS_EVALUATION.md
+NEXT_STEPS.md
+RATM_ICL_TRAINING.md
+SIMULATION_FIXES.md
+SIMULATION.md
+TRAINING_MODES.md
+ZARATAN_EVALUATION_PACKAGE.md
+ZARATAN_PACKAGE_SUMMARY.md
+ZARATAN_README.md
+
+# PDFs
+*.pdf
+
+# Misc dev files
+drone_icl/dataset.py
+drone_icl/test_vision.py
+drone_icl/README.md
+drone_icl/VISION_FEATURES.md
+drone_icl/logs/
+scripts/README_DEMO.md
+scripts/run_full_demo.sh
+encoders_fix.tar.gz

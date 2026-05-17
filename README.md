@@ -1,10 +1,15 @@
 # In-Context Learning for Autonomous Drone Racing
 
-A transformer-based approach that enables drones to adapt to new racing trajectories by learning from demonstration sequences at inference time — no fine-tuning required.
+A transformer-based policy for few-shot racing-line adaptation. The model conditions on demonstration trajectories at inference time and predicts drone control actions for a target episode - no fine-tuning required.
 
 <p align="center">
-  <img src="assets/fpv.mp4" alt="FPV Demo" width="400"/>
-  <img src="assets/third_person.mp4" alt="Third Person Demo" width="400"/>
+  <video src="assets/test_lemniscate_ep_000013_custom.mp4" controls width="720">
+    Demo video: assets/test_lemniscate_ep_000013_custom.mp4
+  </video>
+</p>
+
+<p align="center">
+  <a href="assets/test_lemniscate_ep_000013_custom.mp4">Open the lemniscate demo video</a>
 </p>
 
 ## Overview
@@ -80,6 +85,8 @@ Trained on 28 episodes across 3 track types with rigorous episode-level train/va
 pip install -r requirements.txt
 ```
 
+The training and evaluation scripts expect HDF5 datasets under `data/` and model checkpoints under `checkpoints/`. Those large artifacts are intentionally ignored by Git. Demo video generation uses the original full-lap dataset, typically `data/ratm_racing_dataset.h5`.
+
 ### Train
 
 ```bash
@@ -96,11 +103,22 @@ Training uses AdamW with ReduceLROnPlateau scheduling:
 ### Run Inference / Demo
 
 ```bash
-# Auto-detect GPU/CPU and create demo video
-bash run.sh
+# Create a demo video from a checkpoint and validation dataset
+python scripts/create_demo_video.py \
+  --checkpoint checkpoints/best_model.pt \
+  --data data/ratm_racing_dataset.h5 \
+  --track lemniscate \
+  --num-demos 3 \
+  --output-dir results/demo_videos \
+  --device cpu
 
 # Evaluation mode
-bash run.sh cpu eval
+python scripts/evaluate_icl.py \
+  --checkpoint checkpoints/best_model.pt \
+  --data data/val_final.h5 \
+  --output-dir results \
+  --num-demos 1 3 \
+  --device cpu
 ```
 
 ### Docker
@@ -134,7 +152,8 @@ docker run --gpus all -it drone-icl bash train.sh
 │   ├── EVALUATION_GUIDE.md
 │   ├── DATA_PIPELINE.md
 │   └── ISAAC_SIM_INTEGRATION.md
-└── assets/                    # Demo videos
+└── assets/                    # README demo videos
+    └── test_lemniscate_ep_000013_custom.mp4
 ```
 
 ## Data Pipeline
@@ -146,17 +165,9 @@ docker run --gpus all -it drone-icl bash train.sh
 5. **Split**: `scripts/split_base_episodes.py` — Episode-level train/val split
 6. **Verify**: `scripts/verify_no_leakage.py` — Confirm zero overlap
 
-## Citation
+## Media Assets
 
-If you use this code in your research, please cite:
-
-```bibtex
-@article{drone_icl_2024,
-  title={In-Context Learning for Autonomous Drone Racing: A Transformer-Based Approach},
-  author={Nishchal MN},
-  year={2024}
-}
-```
+The README demo video is stored at `assets/test_lemniscate_ep_000013_custom.mp4`. It was copied from `zaratan_results/results/demo_videos/demo_videos/test_lemniscate_ep_000013_custom.mp4` so the README does not depend on ignored generated-results directories.
 
 ## License
 
